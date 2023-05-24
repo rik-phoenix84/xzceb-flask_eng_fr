@@ -1,7 +1,10 @@
+"""
+This module translates from english to french and viceversa
+"""
 import json
+import os
 from ibm_watson import LanguageTranslatorV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-import os
 from dotenv import load_dotenv
 load_dotenv()
 apikey = os.environ['apikey']
@@ -21,23 +24,23 @@ language_translator = LanguageTranslatorV3(
 language_translator.set_service_url(api_url)
 
 # Translate from English to French
-def englishToFrench(englishText):
+def english_to_french(english_text):
+    """Get access to translator e returns translation json"""
     translation = language_translator.translate(
-        text=englishText,
+        text=english_text,
         model_id='en-fr').get_result()
     print(json.dumps(translation, indent=2, ensure_ascii=False))
-    
     mydict = translation['translations'][0]
-    frenchText = mydict['translation']
-    return frenchText
+    french_text = mydict['translation']
+    return french_text
 
 # Translate from French to English
-def frenchToEnglish(frenchText):
+def french_to_english(french_text):
+    """Get access to translator e returns translation json"""
     translation = language_translator.translate(
-        text=frenchText,
+        text=french_text,
         model_id='fr-en').get_result()
     print(json.dumps(translation, indent=2, ensure_ascii=False))
-    
     mydict = translation['translations'][0]
-    englishText = mydict['translation']
-    return englishText
+    english_text = mydict['translation']
+    return english_text
